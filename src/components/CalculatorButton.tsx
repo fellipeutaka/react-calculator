@@ -23,8 +23,10 @@ export default function CalculatorButton({ text }: ButtonProps) {
   return (
     <button
       className={`
-        flex items-center text-3xl rounded-full ${setStyles()} w-16 h-16
+        flex items-center text-3xl rounded-full w-16 h-16
+        active:opacity-80
         hover:opacity-70 transition-opacity duration-300
+        ${setStyles()}
         `}
     >
       {text}
