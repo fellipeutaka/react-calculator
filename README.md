@@ -7,8 +7,8 @@
 
 - [Technologies Used](#technologies-used-)
 - [Screenshots](#screenshots-%EF%B8%8F)
-- [Project Status](#project-status)
-- [Contact](#contact)
+- [Project Status](#project-status-)
+- [Contact](#contact-)
 
 ## Technologies Used 🛠
 
