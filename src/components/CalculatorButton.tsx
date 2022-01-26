@@ -12,7 +12,7 @@ export default function CalculatorButton({ text }: ButtonProps) {
   const setStyles = () => {
     if (types.number.includes(text)) {
       return text === "0"
-        ? "col-span-2 w-32 bg-numbers text-white justify-start pl-6"
+        ? "col-span-2 w-32 bg-numbers text-white justify-start pl-6 pr-28"
         : "bg-numbers text-white justify-center";
     } else if (types.operator.includes(text)) {
       return "bg-operators text-white font-bold justify-center";
@@ -22,7 +22,10 @@ export default function CalculatorButton({ text }: ButtonProps) {
   };
   return (
     <button
-      className={`flex items-center text-3xl rounded-full ${setStyles()} w-16 h-16`}
+      className={`
+        flex items-center text-3xl rounded-full ${setStyles()} w-16 h-16
+        hover:opacity-70 transition-opacity duration-300
+        `}
     >
       {text}
     </button>
