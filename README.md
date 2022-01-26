@@ -1,7 +1,7 @@
 # React Calculator
 
 > A calculator inspired by iOS calculator UI.
-> Live demo [_here_](https://react-crud-localstorage.netlify.app/).
+> Live demo [_here_](https://typescript-react-calculator.netlify.app/).
 
 ## Table of Contents 📜
 
