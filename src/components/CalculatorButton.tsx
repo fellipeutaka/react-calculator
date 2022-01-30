@@ -1,5 +1,5 @@
 interface ButtonProps {
-  text: string;
+  children: string;
 }
 
 const types = {
@@ -8,17 +8,22 @@ const types = {
   clear: ["AC", "+/-", "%"],
 };
 
-export default function CalculatorButton({ text }: ButtonProps) {
+export default function CalculatorButton({ children }: ButtonProps) {
   const setStyles = () => {
-    if (types.number.includes(text)) {
-      return text === "0"
-        ? "col-span-2 w-32 bg-numbers-0 text-white justify-start pl-6 pr-28 active:bg-numbers-1"
-        : "bg-numbers-0 text-white justify-center active:bg-numbers-1";
-    } else if (types.operator.includes(text)) {
-      return "bg-operators-0 text-white font-bold justify-center active:bg-operators-1";
-    } else {
-      return "bg-clear-0 justify-center active:bg-clear-1";
-    }
+    const styles = {
+      number: "bg-numbers-0 text-white active:bg-numbers-1 ",
+      operator:
+        "bg-operators-0 text-white font-bold justify-center active:bg-operators-1",
+      clear: "bg-clear-0 justify-center active:bg-clear-1",
+    };
+
+    return types.number.includes(children)
+      ? children === "0"
+        ? styles.number + "col-span-2 w-32 justify-start pl-6 pr-28"
+        : styles.number + "justify-center"
+      : types.operator.includes(children)
+      ? styles.operator
+      : styles.clear;
   };
   return (
     <button
@@ -28,7 +33,7 @@ export default function CalculatorButton({ text }: ButtonProps) {
         ${setStyles()}
         `}
     >
-      {text}
+      {children}
     </button>
   );
 }
