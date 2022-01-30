@@ -17,14 +17,14 @@ function reducer(state: State, { type, payload }: Action) {
       if (payload?.digit === "0" && state.currentValue === "0") {
         return state;
       }
-      if (payload?.digit === "." && state.currentValue.includes(".")) {
-        console.log(state.overwrite);
-        return state.overwrite
-          ? {
+      if (payload?.digit === ".") {
+        return state.currentValue.includes(".")
+          ? state
+          : {
               ...state,
               currentValue: `${state.currentValue}${payload?.digit}`,
-            }
-          : state;
+              overwrite: false,
+            };
       }
       if (state.overwrite) {
         return {
