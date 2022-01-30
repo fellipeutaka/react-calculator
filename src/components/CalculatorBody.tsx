@@ -7,61 +7,39 @@ interface Props {
 }
 
 export default function CalculatorBody({ dispatch }: Props) {
+  const addDigit = (number: string) => {
+    dispatch({ type: "ADD_DIGIT", payload: { digit: number } });
+  };
+
+  const setOperation = (operation: string) => {
+    dispatch({ type: "SET_OPERATION", payload: { operation } });
+  };
+
   return (
     <div className="grid w-72 grid-cols-4 grid-rows-5 gap-3">
       <CalculatorButton text="AC" onClick={() => dispatch({ type: "CLEAR" })} />
       <CalculatorButton text="+/-" onClick={() => console.log()} />
       <CalculatorButton text="%" onClick={() => console.log()} />
-      <CalculatorButton text="÷" onClick={() => console.log()} />
-      <CalculatorButton
-        text="7"
-        onClick={() => dispatch({ type: "ADD_DIGIT", payload: { digit: "7" } })}
-      />
+      <CalculatorButton text="÷" onClick={() => setOperation("÷")} />
+      <CalculatorButton text="7" onClick={() => addDigit("7")} />
 
+      <CalculatorButton text="8" onClick={() => addDigit("8")} />
+      <CalculatorButton text="9" onClick={() => addDigit("9")} />
+      <CalculatorButton text="×" onClick={() => setOperation("×")} />
+      <CalculatorButton text="4" onClick={() => addDigit("4")} />
+      <CalculatorButton text="5" onClick={() => addDigit("5")} />
+      <CalculatorButton text="6" onClick={() => addDigit("6")} />
+      <CalculatorButton text="-" onClick={() => setOperation("-")} />
+      <CalculatorButton text="1" onClick={() => addDigit("1")} />
+      <CalculatorButton text="2" onClick={() => addDigit("2")} />
+      <CalculatorButton text="3" onClick={() => addDigit("3")} />
+      <CalculatorButton text="+" onClick={() => setOperation("+")} />
+      <CalculatorButton text="0" onClick={() => addDigit("0")} />
+      <CalculatorButton text="." onClick={() => addDigit(".")} />
       <CalculatorButton
-        text="8"
-        onClick={() => dispatch({ type: "ADD_DIGIT", payload: { digit: "8" } })}
+        text="="
+        onClick={() => dispatch({ type: "EVALUATE" })}
       />
-      <CalculatorButton
-        text="9"
-        onClick={() => dispatch({ type: "ADD_DIGIT", payload: { digit: "9" } })}
-      />
-      <CalculatorButton text="×" onClick={() => console.log()} />
-      <CalculatorButton
-        text="4"
-        onClick={() => dispatch({ type: "ADD_DIGIT", payload: { digit: "4" } })}
-      />
-      <CalculatorButton
-        text="5"
-        onClick={() => dispatch({ type: "ADD_DIGIT", payload: { digit: "5" } })}
-      />
-      <CalculatorButton
-        text="6"
-        onClick={() => dispatch({ type: "ADD_DIGIT", payload: { digit: "6" } })}
-      />
-      <CalculatorButton text="-" onClick={() => console.log()} />
-      <CalculatorButton
-        text="1"
-        onClick={() => dispatch({ type: "ADD_DIGIT", payload: { digit: "1" } })}
-      />
-      <CalculatorButton
-        text="2"
-        onClick={() => dispatch({ type: "ADD_DIGIT", payload: { digit: "2" } })}
-      />
-      <CalculatorButton
-        text="3"
-        onClick={() => dispatch({ type: "ADD_DIGIT", payload: { digit: "3" } })}
-      />
-      <CalculatorButton text="+" onClick={() => console.log()} />
-      <CalculatorButton
-        text="0"
-        onClick={() => dispatch({ type: "ADD_DIGIT", payload: { digit: "0" } })}
-      />
-      <CalculatorButton
-        text="."
-        onClick={() => dispatch({ type: "ADD_DIGIT", payload: { digit: "." } })}
-      />
-      <CalculatorButton text="=" onClick={() => console.log()} />
     </div>
   );
 }

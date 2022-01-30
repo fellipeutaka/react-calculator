@@ -1,4 +1,6 @@
 export type State = {
-  currentValue: string;
+  previousValue?: string | null;
+  currentValue: string | null;
+  operation?: "+" | "-" | "×" | "÷";
   overwrite?: boolean;
 };

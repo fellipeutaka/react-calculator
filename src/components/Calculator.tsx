@@ -18,7 +18,7 @@ function reducer(state: State, { type, payload }: Action) {
         return state;
       }
       if (payload?.digit === ".") {
-        return state.currentValue.includes(".")
+        return state.currentValue?.includes(".")
           ? state
           : {
               ...state,
@@ -37,8 +37,40 @@ function reducer(state: State, { type, payload }: Action) {
         ...state,
         currentValue: `${state.currentValue}${payload?.digit || ""}`,
       };
+    case "SET_OPERATION":
+      console.log(payload?.operation);
+      console.log(state);
+      return {
+        ...state,
+        overwrite: true,
+        previousValue: state.currentValue,
+        operation: payload?.operation,
+      };
+    case "EVALUATE":
+      return {
+        ...state,
+        overwrite: true,
+        currentValue: evaluate(state),
+      };
     default:
       return state;
+  }
+}
+
+function evaluate({ previousValue, operation, currentValue }: State) {
+  const previous = parseFloat(previousValue || "");
+  const current = parseFloat(currentValue || "");
+  switch (operation) {
+    case "+":
+      return (previous + current).toString();
+    case "-":
+      return (previous - current).toString();
+    case "×":
+      return (previous * current).toString();
+    case "÷":
+      return (previous / current).toString();
+    default:
+      throw new Error();
   }
 }
 
@@ -46,7 +78,7 @@ export default function Calculator() {
   const [state, dispatch] = useReducer(reducer, initialValue);
   return (
     <div>
-      <CalculatorHead currentValue={state.currentValue} />
+      <CalculatorHead currentValue={state.currentValue || "0"} />
       <CalculatorBody dispatch={dispatch} />
     </div>
   );
