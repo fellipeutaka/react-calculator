@@ -11,7 +11,7 @@ export default function CalculatorBody({ dispatch }: Props) {
     dispatch({ type: "ADD_DIGIT", payload: { digit: number } });
   };
 
-  const setOperation = (operation: string) => {
+  const setOperation = (operation: "+" | "-" | "×" | "÷") => {
     dispatch({ type: "SET_OPERATION", payload: { operation } });
   };
 
