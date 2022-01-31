@@ -17,9 +17,9 @@
 - [Vite.js](https://vitejs.dev/) - version 2.7
 - [Tailwind CSS](https://tailwindcss.com/) - version 2.2
 
-## Screenshots 🖼️
+## Demo 🖼️
 
-![Example screenshot](https://api.site-shot.com/?url=https://typescript-react-calculator.netlify.app/&userkey=IAAIEYKBJAF3BZ6IYT5DVCQMUF)
+![Demo](https://media1.giphy.com/media/swQKgXyoj9CsALSMKY/giphy.gif?cid=790b761119ea63a6609288f2cb4c93635411a7dbfd2d4630&rid=giphy.gif&ct=g)
 
 ## Project Status 🟢
 
