@@ -28,6 +28,7 @@ export default function CalculatorHead({ currentValue }: Props) {
         className="text-white text-7xl font-light absolute right-0 origin-right"
         ref={spanRef}
         style={{ transform: `scale(${scale},${scale})` }}
+        tabIndex={0}
       >
         {currentValue}
       </span>
