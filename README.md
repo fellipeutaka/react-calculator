@@ -6,7 +6,7 @@
 ## Table of Contents 📜
 
 - [Technologies Used](#technologies-used-)
-- [Screenshots](#screenshots-%EF%B8%8F)
+- [Demo](#demo-%EF%B8%8F)
 - [Project Status](#project-status-)
 - [Contact](#contact-)
 
