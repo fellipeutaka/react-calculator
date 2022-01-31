@@ -1,4 +1,4 @@
-import { Dispatch } from "react";
+import { Dispatch, useEffect } from "react";
 import { Action } from "../types/Action";
 import { State } from "../types/State";
 import CalculatorButton from "./CalculatorButton";
@@ -16,6 +16,57 @@ export default function CalculatorBody({ state, dispatch }: Props) {
   const setOperation = (operation: "+" | "-" | "×" | "÷") => {
     dispatch({ type: "SET_OPERATION", payload: { operation } });
   };
+
+  useEffect(() => {
+    document.addEventListener("keyup", (e) => {
+      const keyPressed = e.key.toLowerCase();
+      type Keys = {
+        [c: string]: () => void;
+        ["%"]: () => void;
+        [0]: () => void;
+        [1]: () => void;
+        [2]: () => void;
+        [3]: () => void;
+        [4]: () => void;
+        [5]: () => void;
+        [6]: () => void;
+        [7]: () => void;
+        [8]: () => void;
+        [9]: () => void;
+        ["."]: () => void;
+        ["/"]: () => void;
+        ["*"]: () => void;
+        ["-"]: () => void;
+        ["+"]: () => void;
+        ["="]: () => void;
+        ["enter"]: () => void;
+      };
+      const keys: Keys = {
+        c: () => dispatch({ type: "CLEAR" }),
+        "%": () => dispatch({ type: "PERCENTAGE" }),
+        0: () => addDigit(keyPressed),
+        1: () => addDigit(keyPressed),
+        2: () => addDigit(keyPressed),
+        3: () => addDigit(keyPressed),
+        4: () => addDigit(keyPressed),
+        5: () => addDigit(keyPressed),
+        6: () => addDigit(keyPressed),
+        7: () => addDigit(keyPressed),
+        8: () => addDigit(keyPressed),
+        9: () => addDigit(keyPressed),
+        ".": () => addDigit(keyPressed),
+        "/": () => setOperation("÷"),
+        "*": () => setOperation("×"),
+        "-": () => setOperation("-"),
+        "+": () => setOperation("+"),
+        "=": () => dispatch({ type: "EVALUATE" }),
+        enter: () => dispatch({ type: "EVALUATE" }),
+      };
+      if (keys[keyPressed]) {
+        keys[keyPressed]();
+      }
+    });
+  }, []);
 
   return (
     <div className="grid w-72 grid-cols-4 grid-rows-5 gap-3">
