@@ -1,11 +1,11 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { Action } from "../types/Action";
 import { State } from "../types/State";
 import CalculatorBody from "./CalculatorBody";
 import CalculatorHead from "./CalculatorHead";
 
 const initialValue: State = {
-  currentValue: "0",
+  previousValue: "0",
   overwrite: true,
 };
 
@@ -14,43 +14,63 @@ function reducer(state: State, { type, payload }: Action) {
     case "CLEAR":
       return initialValue;
     case "ADD_DIGIT":
-      if (payload?.digit === "0" && state.currentValue === "0") {
+      if (payload?.digit === "0" && state.previousValue === "0") {
+        console.log("AII");
         return state;
       }
       if (payload?.digit === ".") {
-        return state.currentValue?.includes(".")
+        return state.previousValue?.includes(".")
           ? state
           : {
               ...state,
-              currentValue: `${state.currentValue}${payload?.digit}`,
+              previousValue: `${state.previousValue}${payload?.digit}`,
               overwrite: false,
             };
       }
-      if (state.overwrite) {
+      if (state.overwrite || state.previousValue === "0") {
         return {
           ...state,
-          currentValue: payload?.digit || "",
+          previousValue: payload?.digit || "",
           overwrite: false,
         };
       }
       return {
         ...state,
-        currentValue: `${state.currentValue}${payload?.digit || ""}`,
+        previousValue: `${state.previousValue}${payload?.digit || ""}`,
       };
     case "SET_OPERATION":
-      console.log(payload?.operation);
-      console.log(state);
+      if (state.currentValue) {
+        return {
+          ...state,
+          overwrite: true,
+          previousValue: evaluate(state),
+          currentValue: evaluate(state),
+          operation: payload?.operation,
+        };
+      }
       return {
         ...state,
         overwrite: true,
-        previousValue: state.currentValue,
+        currentValue: state.previousValue,
         operation: payload?.operation,
+      };
+    case "PERCENTAGE":
+      return {
+        ...state,
+        overwrite: true,
+        previousValue: (parseFloat(state.previousValue || "") / 100).toString(),
+      };
+    case "INVERT":
+      return {
+        ...state,
+        overwrite: false,
+        previousValue: (parseFloat(state.previousValue || "") * -1).toString(),
       };
     case "EVALUATE":
       return {
         ...state,
         overwrite: true,
-        currentValue: evaluate(state),
+        previousValue: evaluate(state),
       };
     default:
       return state;
@@ -62,13 +82,13 @@ function evaluate({ previousValue, operation, currentValue }: State) {
   const current = parseFloat(currentValue || "");
   switch (operation) {
     case "+":
-      return (previous + current).toString();
+      return (current + previous).toString();
     case "-":
-      return (previous - current).toString();
+      return (current - previous).toString();
     case "×":
-      return (previous * current).toString();
+      return (current * previous).toString();
     case "÷":
-      return (previous / current).toString();
+      return (current / previous).toString();
     default:
       throw new Error();
   }
@@ -76,10 +96,11 @@ function evaluate({ previousValue, operation, currentValue }: State) {
 
 export default function Calculator() {
   const [state, dispatch] = useReducer(reducer, initialValue);
+  useEffect(() => console.log(state), [state]);
   return (
     <div>
-      <CalculatorHead currentValue={state.currentValue || "0"} />
-      <CalculatorBody dispatch={dispatch} />
+      <CalculatorHead currentValue={state.previousValue || ""} />
+      <CalculatorBody state={state} dispatch={dispatch} />
     </div>
   );
 }

@@ -1,12 +1,14 @@
 import { Dispatch } from "react";
 import { Action } from "../types/Action";
+import { State } from "../types/State";
 import CalculatorButton from "./CalculatorButton";
 
 interface Props {
+  state: State;
   dispatch: Dispatch<Action>;
 }
 
-export default function CalculatorBody({ dispatch }: Props) {
+export default function CalculatorBody({ state, dispatch }: Props) {
   const addDigit = (number: string) => {
     dispatch({ type: "ADD_DIGIT", payload: { digit: number } });
   };
@@ -17,9 +19,18 @@ export default function CalculatorBody({ dispatch }: Props) {
 
   return (
     <div className="grid w-72 grid-cols-4 grid-rows-5 gap-3">
-      <CalculatorButton text="AC" onClick={() => dispatch({ type: "CLEAR" })} />
-      <CalculatorButton text="+/-" onClick={() => console.log()} />
-      <CalculatorButton text="%" onClick={() => console.log()} />
+      <CalculatorButton
+        text={!state?.currentValue && state.previousValue === "0" ? "AC" : "C"}
+        onClick={() => dispatch({ type: "CLEAR" })}
+      />
+      <CalculatorButton
+        text="+/-"
+        onClick={() => dispatch({ type: "INVERT" })}
+      />
+      <CalculatorButton
+        text="%"
+        onClick={() => dispatch({ type: "PERCENTAGE" })}
+      />
       <CalculatorButton text="÷" onClick={() => setOperation("÷")} />
       <CalculatorButton text="7" onClick={() => addDigit("7")} />
 
