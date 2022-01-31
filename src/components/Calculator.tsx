@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useReducer } from "react";
 import { Action } from "../types/Action";
 import { State } from "../types/State";
 import CalculatorBody from "./CalculatorBody";
@@ -15,7 +15,6 @@ function reducer(state: State, { type, payload }: Action) {
       return initialValue;
     case "ADD_DIGIT":
       if (payload?.digit === "0" && state.previousValue === "0") {
-        console.log("AII");
         return state;
       }
       if (payload?.digit === ".") {
@@ -67,6 +66,9 @@ function reducer(state: State, { type, payload }: Action) {
         previousValue: (parseFloat(state.previousValue || "") * -1).toString(),
       };
     case "EVALUATE":
+      if (!state.previousValue || !state.currentValue || !state.operation) {
+        return state;
+      }
       return {
         ...state,
         overwrite: true,
@@ -96,7 +98,6 @@ function evaluate({ previousValue, operation, currentValue }: State) {
 
 export default function Calculator() {
   const [state, dispatch] = useReducer(reducer, initialValue);
-  useEffect(() => console.log(state), [state]);
   return (
     <div>
       <CalculatorHead currentValue={state.previousValue || ""} />
