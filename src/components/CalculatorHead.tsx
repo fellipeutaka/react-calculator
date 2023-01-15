@@ -4,7 +4,7 @@ interface Props {
   currentValue: string;
 }
 
-export default function CalculatorHead({ currentValue }: Props) {
+export function CalculatorHead({ currentValue }: Props) {
   const [scale, setScale] = useState(1);
   const spanRef = useRef<HTMLSpanElement>(null);
 

@@ -1,6 +1,6 @@
-import Calculator from "./components/Calculator";
+import { Calculator } from "./components/Calculator";
 
-export default function App() {
+export function App() {
   return (
     <main className="flex justify-center items-center w-full h-screen bg-black">
       <Calculator />

@@ -1,14 +1,14 @@
 import { Dispatch, useEffect } from "react";
-import { Action } from "../types/Action";
-import { State } from "../types/State";
-import CalculatorButton from "./CalculatorButton";
+import { Action } from "../@types/Action";
+import { State } from "../@types/State";
+import { CalculatorButton } from "./CalculatorButton";
 
 interface Props {
   state: State;
   dispatch: Dispatch<Action>;
 }
 
-export default function CalculatorBody({ state, dispatch }: Props) {
+export function CalculatorBody({ state, dispatch }: Props) {
   const addDigit = (number: string) => {
     dispatch({ type: "ADD_DIGIT", payload: { digit: number } });
   };

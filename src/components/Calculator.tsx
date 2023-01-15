@@ -1,8 +1,8 @@
 import { useReducer } from "react";
-import { Action } from "../types/Action";
-import { State } from "../types/State";
-import CalculatorBody from "./CalculatorBody";
-import CalculatorHead from "./CalculatorHead";
+import { Action } from "../@types/Action";
+import { State } from "../@types/State";
+import { CalculatorBody } from "./CalculatorBody";
+import { CalculatorHead } from "./CalculatorHead";
 
 const initialValue: State = {
   previousValue: "0",
@@ -96,7 +96,7 @@ function evaluate({ previousValue, operation, currentValue }: State) {
   }
 }
 
-export default function Calculator() {
+export function Calculator() {
   const [state, dispatch] = useReducer(reducer, initialValue);
   return (
     <div>

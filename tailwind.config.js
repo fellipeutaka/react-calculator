@@ -1,6 +1,6 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  purge: ["./src/**/*.tsx", "./src/components/**/*.tsx"],
-  darkMode: false,
+  content: ["./index.html", "./src/App.tsx", "./src/components/*.tsx"],
   theme: {
     extend: {
       colors: {
@@ -17,11 +17,6 @@ module.exports = {
           1: "#e5e5e5",
         },
       },
-    },
-  },
-  variants: {
-    extend: {
-      backgroundColor: ["active"],
     },
   },
   plugins: [],

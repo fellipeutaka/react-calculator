@@ -9,7 +9,7 @@ const types = {
   clear: ["AC", "+/-", "%"],
 };
 
-export default function CalculatorButton({ text, onClick }: ButtonProps) {
+export function CalculatorButton({ text, onClick }: ButtonProps) {
   const setStyles = () => {
     const styles = {
       number: "bg-numbers-0 text-white active:bg-numbers-1 ",
