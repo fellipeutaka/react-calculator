@@ -42,7 +42,7 @@
   <a href="#ℹ%EF%B8%8F-how-to-use">How to use</a> |
   <a href="#-how-to-contribute">How to contribute</a> |
   <a href="#-license">License</a> |
-  <a href="https://typescript-react-calculator.netlify.app/">Live demo</a>
+  <a href="https://fellipeutaka-react-calculator.netlify.app">Live demo</a>
 </p>
 
 ## 💻 Project
