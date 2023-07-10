@@ -1,5 +1,5 @@
 export type State = {
-  previousValue?: string | null;
+  previousValue: string;
   currentValue?: string | null;
   operation?: "+" | "-" | "×" | "÷";
   overwrite?: boolean;

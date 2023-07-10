@@ -1,7 +1,6 @@
-import type { Config } from "tailwindcss";
-
+/** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/App.tsx", "./src/components/*.tsx"],
+  content: ["./index.html", "./src/**/*.tsx"],
   theme: {
     extend: {
       colors: {
@@ -21,4 +20,4 @@ export default {
     },
   },
   plugins: [],
-} satisfies Config;
+};
