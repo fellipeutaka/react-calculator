@@ -1,4 +1,5 @@
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { act, render } from "@testing-library/react";
+
 import { Calculator } from "./Calculator";
 
 describe("Calculator", () => {

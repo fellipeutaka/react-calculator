@@ -1,5 +1,6 @@
-import { CalculatorHead } from "./CalculatorHead";
 import { render } from "@testing-library/react";
+
+import { CalculatorHead } from "./CalculatorHead";
 
 describe("Calculator Head component", () => {
   it("should render Calculator Head component", () => {

@@ -1,8 +1,9 @@
-import type { Action } from "../@types/Action";
-import type { State } from "../@types/State";
 import { useEffect, useReducer } from "react";
 
 import { Big } from "big.js";
+
+import type { Action } from "../@types/Action";
+import type { State } from "../@types/State";
 
 const initialValue: State = {
   previousValue: "0",
