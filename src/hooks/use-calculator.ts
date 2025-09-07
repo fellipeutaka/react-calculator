@@ -1,5 +1,5 @@
 import { Big } from "big.js";
-import { useEffect, useReducer } from "react";
+import { useCallback, useEffect, useReducer } from "react";
 
 import type { Action } from "../@types/action";
 import type { State } from "../@types/state";
@@ -111,49 +111,58 @@ function evaluate({
 export function useCalculator() {
   const [state, dispatch] = useReducer(reducer, initialValue);
 
-  const addDigit = (number: string) => {
+  const addDigit = useCallback((number: string) => {
     dispatch({ payload: { digit: number }, type: "ADD_DIGIT" });
-  };
+  }, []);
 
-  const setOperation = (operation: "+" | "-" | "×" | "÷") => {
+  const setOperation = useCallback((operation: "+" | "-" | "×" | "÷") => {
     dispatch({ payload: { operation }, type: "SET_OPERATION" });
-  };
+  }, []);
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const keys = {
-        "-": () => setOperation("-"),
-        ",": () => addDigit("."),
-        ".": () => addDigit(e.key.toLowerCase()),
-        "*": () => setOperation("×"),
-        "/": () => setOperation("÷"),
-        "%": () => dispatch({ type: "PERCENTAGE" }),
-        "+": () => setOperation("+"),
-        "=": () => dispatch({ type: "EVALUATE" }),
-        0: () => addDigit(e.key.toLowerCase()),
-        1: () => addDigit(e.key.toLowerCase()),
-        2: () => addDigit(e.key.toLowerCase()),
-        3: () => addDigit(e.key.toLowerCase()),
-        4: () => addDigit(e.key.toLowerCase()),
-        5: () => addDigit(e.key.toLowerCase()),
-        6: () => addDigit(e.key.toLowerCase()),
-        7: () => addDigit(e.key.toLowerCase()),
-        8: () => addDigit(e.key.toLowerCase()),
-        9: () => addDigit(e.key.toLowerCase()),
-        c: () => dispatch({ type: "CLEAR" }),
-        enter: () => dispatch({ type: "EVALUATE" }),
-      };
-      if (keys[e.key.toLowerCase() as keyof typeof keys]) {
-        keys[e.key.toLowerCase() as keyof typeof keys]();
-      }
-    };
+    const controller = new AbortController();
 
-    document.addEventListener("keyup", handleKeyDown);
+    document.addEventListener(
+      "keyup",
+      (e) => {
+        const keys = {
+          "-": () => setOperation("-"),
+          ",": () => addDigit("."),
+          ".": () => addDigit(e.key.toLowerCase()),
+          "*": () => setOperation("×"),
+          "/": () => setOperation("÷"),
+          "%": () => dispatch({ type: "PERCENTAGE" }),
+          "+": () => setOperation("+"),
+          "=": () => dispatch({ type: "EVALUATE" }),
+          0: () => addDigit(e.key.toLowerCase()),
+          1: () => addDigit(e.key.toLowerCase()),
+          2: () => addDigit(e.key.toLowerCase()),
+          3: () => addDigit(e.key.toLowerCase()),
+          4: () => addDigit(e.key.toLowerCase()),
+          5: () => addDigit(e.key.toLowerCase()),
+          6: () => addDigit(e.key.toLowerCase()),
+          7: () => addDigit(e.key.toLowerCase()),
+          8: () => addDigit(e.key.toLowerCase()),
+          9: () => addDigit(e.key.toLowerCase()),
+          c: () => dispatch({ type: "CLEAR" }),
+          enter: () => dispatch({ type: "EVALUATE" }),
+        };
+
+        type Key = keyof typeof keys;
+
+        if (keys[e.key.toLowerCase() as Key]) {
+          keys[e.key.toLowerCase() as Key]();
+        }
+      },
+      {
+        signal: controller.signal,
+      }
+    );
 
     return () => {
-      document.removeEventListener("keyup", handleKeyDown);
+      controller.abort();
     };
-  }, [setOperation, addDigit]);
+  }, [addDigit, setOperation]);
 
   return { dispatch, state };
 }

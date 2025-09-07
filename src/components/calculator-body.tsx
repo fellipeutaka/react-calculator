@@ -19,78 +19,78 @@ export function CalculatorBody({ state, dispatch }: CalculatorBodyProps) {
   return (
     <div className="grid w-72 grid-cols-4 grid-rows-5 gap-3">
       <CalculatorButton
-        onClick={() => dispatch({ type: "CLEAR" })}
+        onPress={() => dispatch({ type: "CLEAR" })}
         variant="clear"
       >
         {!state?.currentValue && state.previousValue === "0" ? "AC" : "C"}
       </CalculatorButton>
       <CalculatorButton
-        onClick={() => dispatch({ type: "INVERT" })}
+        onPress={() => dispatch({ type: "INVERT" })}
         variant="clear"
       >
         +/-
       </CalculatorButton>
       <CalculatorButton
-        onClick={() => dispatch({ type: "PERCENTAGE" })}
+        onPress={() => dispatch({ type: "PERCENTAGE" })}
         variant="clear"
       >
         %
       </CalculatorButton>
-      <CalculatorButton onClick={() => setOperation("÷")} variant="operator">
+      <CalculatorButton onPress={() => setOperation("÷")} variant="operator">
         ÷
       </CalculatorButton>
 
-      <CalculatorButton onClick={() => addDigit("7")} variant="number">
+      <CalculatorButton onPress={() => addDigit("7")} variant="number">
         7
       </CalculatorButton>
-      <CalculatorButton onClick={() => addDigit("8")} variant="number">
+      <CalculatorButton onPress={() => addDigit("8")} variant="number">
         8
       </CalculatorButton>
-      <CalculatorButton onClick={() => addDigit("9")} variant="number">
+      <CalculatorButton onPress={() => addDigit("9")} variant="number">
         9
       </CalculatorButton>
-      <CalculatorButton onClick={() => setOperation("×")} variant="operator">
+      <CalculatorButton onPress={() => setOperation("×")} variant="operator">
         ×
       </CalculatorButton>
 
-      <CalculatorButton onClick={() => addDigit("4")} variant="number">
+      <CalculatorButton onPress={() => addDigit("4")} variant="number">
         4
       </CalculatorButton>
-      <CalculatorButton onClick={() => addDigit("5")} variant="number">
+      <CalculatorButton onPress={() => addDigit("5")} variant="number">
         5
       </CalculatorButton>
-      <CalculatorButton onClick={() => addDigit("6")} variant="number">
+      <CalculatorButton onPress={() => addDigit("6")} variant="number">
         6
       </CalculatorButton>
-      <CalculatorButton onClick={() => setOperation("-")} variant="operator">
+      <CalculatorButton onPress={() => setOperation("-")} variant="operator">
         -
       </CalculatorButton>
 
-      <CalculatorButton onClick={() => addDigit("1")} variant="number">
+      <CalculatorButton onPress={() => addDigit("1")} variant="number">
         1
       </CalculatorButton>
-      <CalculatorButton onClick={() => addDigit("2")} variant="number">
+      <CalculatorButton onPress={() => addDigit("2")} variant="number">
         2
       </CalculatorButton>
-      <CalculatorButton onClick={() => addDigit("3")} variant="number">
+      <CalculatorButton onPress={() => addDigit("3")} variant="number">
         3
       </CalculatorButton>
-      <CalculatorButton onClick={() => setOperation("+")} variant="operator">
+      <CalculatorButton onPress={() => setOperation("+")} variant="operator">
         +
       </CalculatorButton>
 
       <CalculatorButton
         className="col-span-2 w-32 justify-start pr-28 pl-6"
-        onClick={() => addDigit("0")}
+        onPress={() => addDigit("0")}
         variant="number"
       >
         0
       </CalculatorButton>
-      <CalculatorButton onClick={() => addDigit(".")} variant="number">
+      <CalculatorButton onPress={() => addDigit(".")} variant="number">
         .
       </CalculatorButton>
       <CalculatorButton
-        onClick={() => dispatch({ type: "EVALUATE" })}
+        onPress={() => dispatch({ type: "EVALUATE" })}
         variant="operator"
       >
         =

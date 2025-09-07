@@ -1,30 +1,35 @@
 import type { VariantProps } from "cva";
+import { Button, composeRenderProps } from "react-aria-components";
 import { cva } from "../lib/cva";
 
 const CalculatorButtonStyles = cva({
-  base: "flex h-16 w-16 items-center rounded-full text-3xl transition-opacity duration-300 hover:opacity-70",
+  base: "flex size-16 items-center rounded-full text-3xl transition-colors",
   variants: {
     variant: {
-      clear: "justify-center bg-clear-0 active:bg-clear-1",
-      number: "justify-center bg-numbers-0 text-white active:bg-numbers-1",
-      operator:
-        "justify-center bg-operators-0 font-bold text-white active:bg-operators-1",
+      clear: "justify-center bg-[#6C6C6B] pressed:bg-[#8D8E8D]",
+      number: "justify-center bg-[#4E4E4D] pressed:bg-[#808180]",
+      operator: "justify-center bg-[#FF9500] pressed:bg-[#FCC78D]",
     },
   },
 });
 
-type CalculatorButtonProps = React.ComponentProps<"button"> &
-  Required<VariantProps<typeof CalculatorButtonStyles>>;
+interface CalculatorButtonProps
+  extends React.ComponentProps<typeof Button>,
+    Required<VariantProps<typeof CalculatorButtonStyles>> {}
 
-export function CalculatorButton(props: CalculatorButtonProps) {
+export function CalculatorButton({
+  className,
+  ...props
+}: CalculatorButtonProps) {
   return (
-    <button
+    <Button
       {...props}
-      className={CalculatorButtonStyles({
-        className: props.className,
-        variant: props.variant,
-      })}
-      type="button"
+      className={composeRenderProps(className, (className) =>
+        CalculatorButtonStyles({
+          className,
+          variant: props.variant,
+        })
+      )}
     />
   );
 }
