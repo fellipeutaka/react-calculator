@@ -1,6 +1,6 @@
-import { useCalculator } from "../hooks/useCalculator";
-import { CalculatorBody } from "./CalculatorBody";
-import { CalculatorHead } from "./CalculatorHead";
+import { useCalculator } from "../hooks/use-calculator";
+import { CalculatorBody } from "./calculator-body";
+import { CalculatorHead } from "./calculator-head";
 
 export function Calculator() {
   const { state, dispatch } = useCalculator();
@@ -8,7 +8,7 @@ export function Calculator() {
   return (
     <div>
       <CalculatorHead value={state.previousValue} />
-      <CalculatorBody state={state} dispatch={dispatch} />
+      <CalculatorBody dispatch={dispatch} state={state} />
     </div>
   );
 }

@@ -1,13 +1,12 @@
+import { Big } from "big.js";
 import { useEffect, useReducer } from "react";
 
-import { Big } from "big.js";
-
-import type { Action } from "../@types/Action";
-import type { State } from "../@types/State";
+import type { Action } from "../@types/action";
+import type { State } from "../@types/state";
 
 const initialValue: State = {
-  previousValue: "0",
   overwrite: true,
+  previousValue: "0",
 };
 
 function reducer(state: State, { type, payload }: Action) {
@@ -23,15 +22,15 @@ function reducer(state: State, { type, payload }: Action) {
           ? state
           : {
               ...state,
-              previousValue: `${state.previousValue}${payload?.digit}`,
               overwrite: false,
+              previousValue: `${state.previousValue}${payload?.digit}`,
             };
       }
       if (state.overwrite || state.previousValue === "0") {
         return {
           ...state,
-          previousValue: payload?.digit || "",
           overwrite: false,
+          previousValue: payload?.digit || "",
         };
       }
       return {
@@ -42,17 +41,17 @@ function reducer(state: State, { type, payload }: Action) {
       if (state.currentValue) {
         return {
           ...state,
-          overwrite: true,
-          previousValue: evaluate(state),
           currentValue: evaluate(state),
           operation: payload?.operation,
+          overwrite: true,
+          previousValue: evaluate(state),
         };
       }
       return {
         ...state,
-        overwrite: true,
         currentValue: state.previousValue,
         operation: payload?.operation,
+        overwrite: true,
       };
     case "PERCENTAGE":
       return {
@@ -64,19 +63,19 @@ function reducer(state: State, { type, payload }: Action) {
       return {
         ...state,
         overwrite: false,
-        previousValue: (parseFloat(state.previousValue) * -1).toString(),
+        previousValue: (Number.parseFloat(state.previousValue) * -1).toString(),
       };
     case "EVALUATE":
-      if (!state.previousValue || !state.currentValue || !state.operation) {
+      if (!(state.previousValue && state.currentValue && state.operation)) {
         return state;
       }
       return {
         ...state,
-        overwrite: true,
-        previousValue: evaluate(state),
         currentValue: state.overwrite
           ? state.currentValue
           : state.previousValue,
+        overwrite: true,
+        previousValue: evaluate(state),
       };
     default:
       return state;
@@ -89,8 +88,8 @@ function evaluate({
   currentValue,
   overwrite,
 }: State) {
-  const previous = parseFloat(previousValue || "");
-  const current = parseFloat(currentValue || "");
+  const previous = Number.parseFloat(previousValue || "");
+  const current = Number.parseFloat(currentValue || "");
   switch (operation) {
     case "+":
       return new Big(previous).plus(current).toString();
@@ -105,7 +104,7 @@ function evaluate({
         ? new Big(previous).div(current).toString()
         : new Big(current).div(previous).toString();
     default:
-      throw new Error();
+      throw new Error(`Unknown operation ${operation}`);
   }
 }
 
@@ -113,18 +112,24 @@ export function useCalculator() {
   const [state, dispatch] = useReducer(reducer, initialValue);
 
   const addDigit = (number: string) => {
-    dispatch({ type: "ADD_DIGIT", payload: { digit: number } });
+    dispatch({ payload: { digit: number }, type: "ADD_DIGIT" });
   };
 
   const setOperation = (operation: "+" | "-" | "×" | "÷") => {
-    dispatch({ type: "SET_OPERATION", payload: { operation } });
+    dispatch({ payload: { operation }, type: "SET_OPERATION" });
   };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const keys = {
-        c: () => dispatch({ type: "CLEAR" }),
+        "-": () => setOperation("-"),
+        ",": () => addDigit("."),
+        ".": () => addDigit(e.key.toLowerCase()),
+        "*": () => setOperation("×"),
+        "/": () => setOperation("÷"),
         "%": () => dispatch({ type: "PERCENTAGE" }),
+        "+": () => setOperation("+"),
+        "=": () => dispatch({ type: "EVALUATE" }),
         0: () => addDigit(e.key.toLowerCase()),
         1: () => addDigit(e.key.toLowerCase()),
         2: () => addDigit(e.key.toLowerCase()),
@@ -135,13 +140,7 @@ export function useCalculator() {
         7: () => addDigit(e.key.toLowerCase()),
         8: () => addDigit(e.key.toLowerCase()),
         9: () => addDigit(e.key.toLowerCase()),
-        ".": () => addDigit(e.key.toLowerCase()),
-        ",": () => addDigit("."),
-        "/": () => setOperation("÷"),
-        "*": () => setOperation("×"),
-        "-": () => setOperation("-"),
-        "+": () => setOperation("+"),
-        "=": () => dispatch({ type: "EVALUATE" }),
+        c: () => dispatch({ type: "CLEAR" }),
         enter: () => dispatch({ type: "EVALUATE" }),
       };
       if (keys[e.key.toLowerCase() as keyof typeof keys]) {
@@ -154,7 +153,7 @@ export function useCalculator() {
     return () => {
       document.removeEventListener("keyup", handleKeyDown);
     };
-  }, []);
+  }, [setOperation, addDigit]);
 
-  return { state, dispatch };
+  return { dispatch, state };
 }

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
-type CalculatorHeadProps = {
+interface CalculatorHeadProps {
   value: string;
-};
+}
 
 export function CalculatorHead({ value }: CalculatorHeadProps) {
   const [scale, setScale] = useState(1);
@@ -23,9 +23,9 @@ export function CalculatorHead({ value }: CalculatorHeadProps) {
   }, [value]);
 
   return (
-    <header className="w-72 h-36 flex justify-end items-end pb-4 pr-5 relative">
+    <header className="relative flex h-36 w-72 items-end justify-end pr-5 pb-4">
       <strong
-        className="text-white text-7xl font-light absolute right-0 origin-right"
+        className="absolute right-0 origin-right font-light text-7xl text-white"
         ref={spanRef}
         style={{ transform: `scale(${scale},${scale})` }}
       >

@@ -1,4 +1,4 @@
-export type Action = {
+export interface Action {
   type:
     | "ADD_DIGIT"
     | "SET_OPERATION"
@@ -10,4 +10,4 @@ export type Action = {
     digit?: string;
     operation?: "+" | "-" | "×" | "÷";
   };
-};
+}

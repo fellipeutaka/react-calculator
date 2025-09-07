@@ -1,8 +1,8 @@
-import { Calculator } from "./components/Calculator";
+import { Calculator } from "./components/calculator";
 
 export function App() {
   return (
-    <main className="flex justify-center items-center w-full h-screen bg-black">
+    <main className="flex h-screen w-full items-center justify-center bg-black">
       <Calculator />
     </main>
   );

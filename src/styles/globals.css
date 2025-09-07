@@ -1,3 +1,22 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-numbers-0: #313131;
+  --color-numbers-1: #6d6d6d;
+
+  --color-operators-0: #f69906;
+  --color-operators-1: #ffdf4c;
+
+  --color-clear-0: #9f9f9f;
+  --color-clear-1: #e5e5e5;
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
